@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointersOnType", "PointersO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointersOnArrayAndStacalloc", "PointersOnArrayAndStacalloc\PointersOnArrayAndStacalloc.csproj", "{99CE9F6D-3329-4124-B2FE-20878984D172}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixed", "Fixed\Fixed.csproj", "{15D922AE-37BD-4992-B0FC-C7A474670550}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{99CE9F6D-3329-4124-B2FE-20878984D172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99CE9F6D-3329-4124-B2FE-20878984D172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99CE9F6D-3329-4124-B2FE-20878984D172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15D922AE-37BD-4992-B0FC-C7A474670550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D922AE-37BD-4992-B0FC-C7A474670550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D922AE-37BD-4992-B0FC-C7A474670550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D922AE-37BD-4992-B0FC-C7A474670550}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
