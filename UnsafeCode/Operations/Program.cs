@@ -24,7 +24,22 @@ namespace Operations
 
                 *x = 50;
 
-                Console.WriteLine(y);            
+                Console.WriteLine(y);
+            }
+
+            Console.ReadLine();
+
+            unsafe
+            {
+                int* x;
+
+                int y = 10;
+
+                x = &y;
+
+                uint addr = (uint)x;
+
+                Console.WriteLine("The address of the variable y: {0}", addr);
             }
 
             Console.ReadLine();
