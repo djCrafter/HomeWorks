@@ -25,7 +25,7 @@ namespace PointersOnType
                 p->age = 30;
                 Console.WriteLine(p->age);
 
-                (*p).height = 180;
+                (*p).height = 180;               
                 Console.WriteLine((*p).height);
             }
 
