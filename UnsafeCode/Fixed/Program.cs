@@ -34,6 +34,22 @@ namespace Fixed
             }
 
             Console.ReadLine();
+
+            unsafe
+            {
+                int[] nums = { 0, 1, 2, 3, 7, 88 };
+                string str = "Hello world!!!";
+
+                fixed(int* p = nums)
+                {
+
+                }
+                fixed(char* p = str)
+                {
+
+                }
+
+            }
         }
     }
 }
