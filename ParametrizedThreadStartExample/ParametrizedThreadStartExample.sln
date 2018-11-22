@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParametrizedThreadStartExample1", "ParametrizedThreadStartExample\ParametrizedThreadStartExample1.csproj", "{61CA9FA7-52CD-4EB8-B70B-BD4E9942139A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParametrizedThreadStartExample2", "ParametrizedThreadStartExample2\ParametrizedThreadStartExample2.csproj", "{213FFE5E-28A1-433C-81AB-7A677E8CF55E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61CA9FA7-52CD-4EB8-B70B-BD4E9942139A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61CA9FA7-52CD-4EB8-B70B-BD4E9942139A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61CA9FA7-52CD-4EB8-B70B-BD4E9942139A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61CA9FA7-52CD-4EB8-B70B-BD4E9942139A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{213FFE5E-28A1-433C-81AB-7A677E8CF55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213FFE5E-28A1-433C-81AB-7A677E8CF55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213FFE5E-28A1-433C-81AB-7A677E8CF55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213FFE5E-28A1-433C-81AB-7A677E8CF55E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2EB69977-826B-4C5A-A177-8AFAD7BAD5BC}
+	EndGlobalSection
+EndGlobal
