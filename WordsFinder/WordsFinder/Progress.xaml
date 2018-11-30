@@ -1,0 +1,32 @@
+﻿<Window x:Class="WordsFinder.Progress"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WordsFinder"
+        mc:Ignorable="d"
+        Title="Progress" Height="450" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ProgressBar x:Name="progressBar"
+                     Grid.Column="0" 
+                     Grid.Row="0" 
+                     Grid.ColumnSpan="2"
+                     Minimum="0" Maximum="100" Value="0" 
+                     Height="30"
+                     Width="700"
+                     />
+        <Button x:Name="cancelButton" Grid.Column="0" Grid.Row="2" Margin="60,70,60,70" Content="Отмена" FontSize="30" Click="cancelButton_Click"/>
+        <Button x:Name="pauseButton" Grid.Column="1" Grid.Row="2" Margin="60,70,60,70"  Content="Пауза" FontSize="30"/>
+        <Label x:Name="label" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="Идет поиск файлов. подождите..." HorizontalAlignment="Center"/>
+
+    </Grid>
+</Window>
