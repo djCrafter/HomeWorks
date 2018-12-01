@@ -15,18 +15,22 @@ namespace WordsFinder
     /// </summary>
     public class Core
     {
-        FileWalker fileWalker = new FileWalker();
+        public string Words { get; set; }
+
+        FileWalker fileWalker;
+        TextWalker textWalker;
 
         List<string> allPath = new List<string>();
 
         CancellationTokenSource cancelToken = new CancellationTokenSource();
-
-
+     
         /// <summary>
         ///  Инициализирует новый экземпляр класса Core.
         /// </summary>
         public Core()
         {
+            fileWalker = new FileWalker(cancelToken);
+            textWalker = new TextWalker(cancelToken);
         }
 
         public string OpenFile()
@@ -54,20 +58,19 @@ namespace WordsFinder
 
                 var result = fileWalker.GetFiles();
 
-                Thread.Sleep(3000);
+             
                 try
                 {
                     foreach (var item in result)
                     {                     
                         allPath.Add(item);
-                    }
-
-                 
+                    }                
                }
                 catch (OperationCanceledException ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
+
                 //StringBuilder sb = new StringBuilder();
 
 
@@ -76,6 +79,18 @@ namespace WordsFinder
                 //    sb.Append(item + "\n");
                 //}
                 //MessageBox.Show(sb.ToString());
+
+                if (cancelToken.IsCancellationRequested)
+                    return false;
+
+
+                string[] str = Words.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string item in allPath)
+                {
+                    textWalker.ScanFile(item, str);
+                }
+
 
                 return true;
             });           
@@ -86,5 +101,7 @@ namespace WordsFinder
             cancelToken.Cancel();
         }
         
+        
+      
     }
 }

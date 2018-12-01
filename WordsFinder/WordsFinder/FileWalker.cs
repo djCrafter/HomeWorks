@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace WordsFinder
 {
@@ -16,20 +17,31 @@ namespace WordsFinder
     {
         #region Ctor
 
-        CancellationTokenSource cancelToken;
+        CancellationTokenSource cancellationToken;
+
+        private bool isCancel = false;
 
         /// <summary>
         ///  Инициализирует новый экземпляр класса FileWalker.
         /// </summary>
         public FileWalker()
         {          
-            IncludePath = new List<string>() { @"e:\" };
+            IncludePath = new List<string>() { @"d:\" };
             ExcludePath = new List<string>() { "" };
             IncludeExtension = new List<string>() { "*.txt" };
             ExcludeExtension = new List<string>() { "" };
         }
 
-     
+        public FileWalker(CancellationTokenSource cancellationToken)
+        {
+            IncludePath = new List<string>() { @"e:\" };
+            ExcludePath = new List<string>() { "" };
+            IncludeExtension = new List<string>() { "*.txt" };
+            ExcludeExtension = new List<string>() { "" };
+            this.cancellationToken = cancellationToken;
+        }
+
+
 
         /// <summary>
         /// Инициализирует новый экземпляр класса FileWalker.
@@ -113,6 +125,12 @@ namespace WordsFinder
                                     {
                                         // Получаем файлы
                                         list.AddRange(GetFiles(enumerator.Current, iterator.Current));
+                                        if (isCancel)
+                                        {
+                                            list.Clear();
+                                            return list;
+                                        }
+                                            
                                     }
                                 }
                             }
@@ -139,20 +157,36 @@ namespace WordsFinder
             // Создаем список
             var list = new List<String>();
             // Итератор по файлам
+
+            ParallelOptions parallelOptions = new ParallelOptions();
+            parallelOptions.CancellationToken = cancellationToken.Token;
+            parallelOptions.MaxDegreeOfParallelism = System.Environment.ProcessorCount;
+            
+           
+
             using (var iterator = Directory.EnumerateFiles(directory, searchPattern).GetEnumerator())
             {
                 try
                 {
                     while (iterator.MoveNext())
                     {
+                        parallelOptions.CancellationToken.ThrowIfCancellationRequested();
                         // Получаем расширение файла и проверяем его
                         var fileInfo = new FileInfo(iterator.Current);
                         if (!ExcludeExtension.Contains(String.Concat("*", fileInfo.Extension)))
                         {
+                         
                             // Добавляем в список
                             list.Add(iterator.Current);
                         }
                     }
+                }
+                catch (OperationCanceledException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    isCancel = true;
+                    list.Clear();
+                    return list;
                 }
                 catch (ArgumentException ex)
                 {
@@ -177,19 +211,34 @@ namespace WordsFinder
                     // из-за ошибки ввода-вывода или особого типа ошибки безопасности.
                     Debug.Print(ex.Message);
                 }
+               
             }
             // Итератор по директориям
             using (var iterator = Directory.EnumerateDirectories(directory).GetEnumerator())
-            {
+            {                
                 while (iterator.MoveNext())
-                {
+                {                   
                     try
                     {
+                        parallelOptions.CancellationToken.ThrowIfCancellationRequested();
                         // Проверяем папку в исключенных
                         if (!ExcludePath.Contains(iterator.Current, StringComparer.OrdinalIgnoreCase))
                         {
+                           
                             list.AddRange(GetFiles(iterator.Current, searchPattern));
+                            if (isCancel)
+                            {
+                                list.Clear();
+                                return list;
+                            }
                         }
+                    }
+                    catch (OperationCanceledException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        isCancel = true;
+                        list.Clear();
+                        return list;
                     }
                     catch (ArgumentException ex)
                     {

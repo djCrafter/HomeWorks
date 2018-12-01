@@ -25,8 +25,7 @@ namespace WordsFinder
         Core core;
 
       
-       
-
+      
         bool isReady = false;
 
         public Progress(Core core)
@@ -35,6 +34,7 @@ namespace WordsFinder
             this.core = core;
 
             LoadAllPath();
+
             //DispatcherTimer dispatcherTimer = new DispatcherTimer();
             //dispatcherTimer.Tick += DispatcherTimer_Tick;
             //dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
@@ -47,6 +47,10 @@ namespace WordsFinder
             if (isReady)
             {
                 MessageBox.Show("IsReady");
+            }
+            else
+            {
+                this.Close();
             }
         }
 

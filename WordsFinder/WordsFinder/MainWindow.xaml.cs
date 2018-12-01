@@ -34,6 +34,7 @@ namespace WordsFinder
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            core.Words = textBox1.Text;
             Progress progress = new Progress(core);
             progress.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             progress.ShowDialog();
