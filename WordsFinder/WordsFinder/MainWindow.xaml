@@ -14,11 +14,24 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
-         </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
         <TextBox x:Name="textBox1" Grid.Column="0" Grid.Row="0" Margin="20"/>
-        <Button x:Name="browseButton" Grid.Column="1" Grid.Row="0" Margin="50,20,50,200" Content="Browse" FontSize="30" Click="browseButton_Click"/>
-        <Button x:Name="startButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="250,30,250,30" Content="Start" FontSize="30" Click="startButton_Click"/>
-        <Button x:Name="temporaryButton" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="92,239,0,0" Click="temporaryButton_Click" />
      
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <Button x:Name="browseButton"  Grid.Row="0" Margin="30" Content="Browse" FontSize="30" Click="browseButton_Click"/>
+            <ComboBox x:Name="comboBox" Grid.Row="1" Margin="100,50,100,50" FontSize="20"/>
+        </Grid>
+        
+        
+        
+        <Button x:Name="startButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="250,30,250,30" Content="Start" FontSize="30" Click="startButton_Click"/>
+        <Button x:Name="temporaryButton" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="165,90,0,0" Click="temporaryButton_Click" Grid.Row="1" />
+         
     </Grid>
 </Window>

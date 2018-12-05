@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace WordsFinder
 {
@@ -20,11 +21,14 @@ namespace WordsFinder
     /// </summary>
     public partial class MainWindow : Window
     {
-        Core core = new Core();
+        Core core;
         
         public MainWindow()
         {
             InitializeComponent();
+            GetAllDrives();
+
+            core = new Core(comboBox.SelectedItem.ToString());
         }
 
         private void browseButton_Click(object sender, RoutedEventArgs e)
@@ -34,16 +38,37 @@ namespace WordsFinder
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            core.Words = textBox1.Text;
-            Progress progress = new Progress(core);
-            progress.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            progress.ShowDialog();
+            core = new Core(comboBox.SelectedItem.ToString());
+
+            if (textBox1.Text.Length != 0)
+            {
+                core.Words = textBox1.Text;
+                Progress progress = new Progress(core);
+                progress.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                progress.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Задайте слова для поиска!!!", "WordFinder message", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
         }
 
         private async void temporaryButton_Click(object sender, RoutedEventArgs e)
         {            
             await core.LoadAllPath();
+        }
+
+        private void GetAllDrives()
+        {
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+            foreach(DriveInfo item in allDrives)
+            {
+                comboBox.Items.Add(item.Name);
+            }
+
+            comboBox.SelectedItem = comboBox.Items[0];
         }
     }
 }

@@ -24,17 +24,17 @@ namespace WordsFinder
         /// <summary>
         ///  Инициализирует новый экземпляр класса FileWalker.
         /// </summary>
-        public FileWalker()
-        {          
-            IncludePath = new List<string>() { @"d:\" };
-            ExcludePath = new List<string>() { "" };
-            IncludeExtension = new List<string>() { "*.txt" };
-            ExcludeExtension = new List<string>() { "" };
-        }
+        //public FileWalker()
+        //{          
+        //    IncludePath = new List<string>() { @"d:\" };
+        //    ExcludePath = new List<string>() { "" };
+        //    IncludeExtension = new List<string>() { "*.txt" };
+        //    ExcludeExtension = new List<string>() { "" };
+        //}
 
-        public FileWalker(CancellationTokenSource cancellationToken)
+        public FileWalker(CancellationTokenSource cancellationToken, string drive)
         {
-            IncludePath = new List<string>() { @"e:\" };
+            IncludePath = new List<string>() { drive };
             ExcludePath = new List<string>() { "" };
             IncludeExtension = new List<string>() { "*.txt" };
             ExcludeExtension = new List<string>() { "" };

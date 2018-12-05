@@ -24,10 +24,7 @@ namespace WordsFinder
     {
         Core core;
 
-      
-      
-        bool isReady = false;
-
+                  
         public Progress(Core core)
         {
             InitializeComponent();
@@ -43,8 +40,31 @@ namespace WordsFinder
 
         private async void LoadAllPath()
         {
-            isReady = await core.LoadAllPath();
-            if (isReady)
+            List<string> list = await core.LoadAllPath();
+            
+
+            MessageBox.Show("Messagae!!!!");
+
+            if (list != null)
+            {
+                label.Content = "Сканирование файлов...";
+
+                progressBar.Maximum = list.Count;
+
+                foreach (string item in list)
+                {
+                    if (await core.TextWalk(item))                  
+                        progressBar.Value++;
+                    else
+                    {
+                        list = null;
+                        break;
+                    }
+                }
+            }
+
+
+            if (list != null)
             {
                 MessageBox.Show("IsReady");
             }
@@ -52,6 +72,8 @@ namespace WordsFinder
             {
                 this.Close();
             }
+
+            
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)

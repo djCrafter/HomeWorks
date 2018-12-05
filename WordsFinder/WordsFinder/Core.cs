@@ -17,6 +17,8 @@ namespace WordsFinder
     {
         public string Words { get; set; }
 
+        private string drive;
+
         FileWalker fileWalker;
         TextWalker textWalker;
 
@@ -27,10 +29,12 @@ namespace WordsFinder
         /// <summary>
         ///  Инициализирует новый экземпляр класса Core.
         /// </summary>
-        public Core()
+        public Core(string drive)
         {
-            fileWalker = new FileWalker(cancelToken);
+            this.drive = drive;
+            fileWalker = new FileWalker(cancelToken, this.drive);
             textWalker = new TextWalker(cancelToken);
+            CreateDirs();
         }
 
         public string OpenFile()
@@ -46,11 +50,13 @@ namespace WordsFinder
             return File.ReadAllText(fileName);
         }      
 
-        public async Task<bool> LoadAllPath()
+        public async Task<List<string>> LoadAllPath()
         {
            return await Task.Run(() =>
             {
                 allPath.Clear();
+                
+
 
                 ParallelOptions paropt = new ParallelOptions();
                 paropt.CancellationToken = cancelToken.Token;
@@ -78,10 +84,10 @@ namespace WordsFinder
                 //{
                 //    sb.Append(item + "\n");
                 //}
-                //MessageBox.Show(sb.ToString());
+                //MessageBox.Show(sb.ToString() );
 
                 if (cancelToken.IsCancellationRequested)
-                    return false;
+                    return null;
 
 
                 string[] str = Words.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -92,8 +98,28 @@ namespace WordsFinder
                 }
 
 
-                return true;
+                return allPath;
             });           
+        }
+
+        public async Task<bool> TextWalk(string path)
+        {
+            return await Task.Run(() =>
+            {
+                MessageBox.Show(Thread.CurrentThread.ManagedThreadId.ToString());
+
+                string[] str = Words.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string item in allPath)
+                {
+                    textWalker.ScanFile(item, str);
+                    if (cancelToken.IsCancellationRequested)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            });
         }
 
         public void CancelOperation()
@@ -101,7 +127,16 @@ namespace WordsFinder
             cancelToken.Cancel();
         }
         
+        private void CreateDirs()
+        {
+            string path = @".\CopyTxt";           
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            if (!dirInfo.Exists)
+            {
+                dirInfo.Create();
+            }
+          
+        }
         
-      
     }
 }
