@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordsFinder", "WordsFinder\WordsFinder.csproj", "{9849C4BE-2655-486C-94AB-D55B1ABDDCCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextFinder", "TextFinder\TextFinder.csproj", "{FA902727-00D5-4737-BA39-4EAF0B8C1A96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9849C4BE-2655-486C-94AB-D55B1ABDDCCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9849C4BE-2655-486C-94AB-D55B1ABDDCCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9849C4BE-2655-486C-94AB-D55B1ABDDCCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9849C4BE-2655-486C-94AB-D55B1ABDDCCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA902727-00D5-4737-BA39-4EAF0B8C1A96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA902727-00D5-4737-BA39-4EAF0B8C1A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA902727-00D5-4737-BA39-4EAF0B8C1A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA902727-00D5-4737-BA39-4EAF0B8C1A96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B5E36246-2D3C-4E28-8FCD-40C4C741FBAB}
+		SolutionGuid = {C88637DF-D478-4C9A-9D33-3FF7CE01BBDF}
 	EndGlobalSection
 EndGlobal
