@@ -34,11 +34,9 @@ namespace TextFinder
                 catch(Exception e)
                 {
                     Debug.Print(e.Message);
-                }
-             
+                }            
             }
          
-
             if (text != null)
             {
                 using (var enumerator = fWords.GetEnumerator())
@@ -47,15 +45,14 @@ namespace TextFinder
                     {
                         if (text.Contains(enumerator.Current))
                         {                              
-                            string newPath = @"CopyTxt\" + "Drive_" + drive + @"\" + Path.GetFileName(path);
+                            string newPath = @"CopyTxt\Drive_" + drive + @"\" + Path.GetFileName(path); 
                             FileInfo fileInf = new FileInfo(path);
                             if (fileInf.Exists)
                             {
                                 try
                                 {
                                     if (File.Exists(newPath))
-                                    {
-                                        MessageBox.Show("Break!!!");
+                                    {                                    
                                         break;
                                     }
                                     else
@@ -107,29 +104,27 @@ namespace TextFinder
             return dirPath + subpath;
         }
 
-        public void Replace(string path, string[] words) 
+        public void Replace(string drive, string[] words) 
         {
+            string path = @"CopyTxt\Drive_" + drive;
+
             DirectoryInfo df = new DirectoryInfo(path);
+
+            df.CreateSubdirectory("RepFiles");
 
             foreach(FileInfo file in df.GetFiles())
             {
-               string text = File.ReadAllText(file.FullName);
+               string text = File.ReadAllText(file.FullName, Encoding.Default);
 
                 foreach(string word in words)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    for(int i = 0; i < word.Length; ++i)
-                    {
-                        sb.Append("*");
-                    }
-
-                    text.Replace(word, sb.ToString());
+                {                  
+                    text = text.Replace(word, new string('*', word.Length));
                 }
-                
+
+                string newPath = path + @"\RepFiles\" + Path.GetFileNameWithoutExtension(file.FullName) + "_copy.txt";
+
+                File.WriteAllText(newPath, text, Encoding.Default);
             }
-
-
-
         }
     }
 }

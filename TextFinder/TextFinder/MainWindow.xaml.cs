@@ -27,9 +27,7 @@ namespace TextFinder
         public MainWindow()
         {
             InitializeComponent();
-            GetAllDrives();
-
-          
+            GetAllDrives();        
         }
 
 
@@ -41,7 +39,6 @@ namespace TextFinder
             {
                 comboBox.Items.Add(item.Name);
             }
-
             comboBox.SelectedItem = comboBox.Items[0];
         }
 
@@ -51,7 +48,6 @@ namespace TextFinder
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
-
         {
             if (textBox1.Text.Length != 0)
             {
@@ -65,9 +61,6 @@ namespace TextFinder
             {
                 MessageBox.Show("Задайте слова для поиска!!!", "WordFinder message", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-        }
-
-    
-    }        
-  
+        }  
+    }          
 }

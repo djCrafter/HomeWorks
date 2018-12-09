@@ -33,7 +33,6 @@
 
 
         <Button x:Name="startButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="250,30,250,30" Content="Start" FontSize="30" Click="startButton_Click"/>
-        <Button x:Name="temporaryButton" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="165,90,0,0" Grid.Row="1" />
 
     </Grid>
 </Window>

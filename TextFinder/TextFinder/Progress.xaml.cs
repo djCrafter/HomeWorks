@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace TextFinder
 {
@@ -43,11 +44,13 @@ namespace TextFinder
             if(!isCanceled)
             await core.TextWalk(list);
 
+            if (!isCanceled)
+            await core.TextReplace();
 
+            if (!isCanceled)
+                Process.Start(@"CopyTxt\Drive_" + core.Drive[0]);
 
-
-            if (isCanceled)
-                Close();          
+                Close();            
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)

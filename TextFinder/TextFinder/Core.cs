@@ -125,13 +125,20 @@ namespace TextFinder
                     if (Cancel)
                     {
                         return;
-                    }
-                   
-                    textWalker.ScanFileAndCopy(item, words, Drive);                    
+                    }                                       
+                    textWalker.ScanFileAndCopy(item, words, Drive[0].ToString());                    
                 }
             });
         }
       
+        public async Task TextReplace()
+        {
+            await Task.Run(() =>
+            {
+            textWalker.Replace(Drive[0].ToString(), words);
+            });
+        }
+
 
         public void CancelSearch()
         {
