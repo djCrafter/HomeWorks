@@ -1,0 +1,23 @@
+﻿<Window x:Class="ChatClientWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatClientWpf"
+        mc:Ignorable="d"
+        Title="LocalChatClient" Height="498.795" Width="879.97">
+    <Grid>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="343" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="582" VerticalScrollBarVisibility="Auto"/>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="343" Margin="654,10,0,0" VerticalAlignment="Top" Width="192">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="sendPersonal" Content="Отправить лично" HorizontalAlignment="Left" Margin="654,381,0,0" VerticalAlignment="Top" Width="192" Height="48"/>
+        <Button x:Name="sendButton" Content="Отправить" HorizontalAlignment="Left" Margin="400,381,0,0" VerticalAlignment="Top" Width="192" Height="48" Click="sendButton_Click"/>
+        <TextBox x:Name="sendTextBox" HorizontalAlignment="Left" Height="48" Margin="23,381,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" PreviewKeyDown="sendTextBox_PreviewKeyDown"/>
+
+    </Grid>
+</Window>
