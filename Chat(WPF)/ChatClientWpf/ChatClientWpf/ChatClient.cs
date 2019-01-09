@@ -22,12 +22,16 @@ namespace ChatClientWpf
         static NetworkStream stream;
         string id;
 
+        bool WithTime { get; set; }
+
+
         public Client(string userName, string host, int port, MainWindow gui)
         {
             this.userName = userName;
             this.host = host;
             this.port = port;
             this.gui = gui;
+            WithTime = true;
         }
 
         public void Connect()
@@ -47,8 +51,14 @@ namespace ChatClientWpf
             }
             catch (Exception ex)
             {
-               
-            }          
+                MessageBox.Show("Удаленный сервер не отвечает!\nНет соединения или вы забыли запустить сервер:)", "Error Code(1703)", MessageBoxButton.OK, MessageBoxImage.Stop);
+
+                gui.Dispatcher.Invoke(DispatcherPriority.Background, new
+               Action(() =>
+               {
+                   gui.Close();
+               }));
+            }
         }
 
         public async Task SendMessage(string message)
@@ -120,11 +130,7 @@ namespace ChatClientWpf
                     Leave(message);
                     break;
                 default:
-                    gui.textBox.Dispatcher.Invoke(DispatcherPriority.Background, new
-                    Action(() =>
-                    {
-                        gui.textBox.Text += "\n" + message;
-                    }));
+                    PrintDefaultMessage(message);
                     break;
             }
         }
@@ -191,6 +197,10 @@ namespace ChatClientWpf
         {
             int index = message.IndexOf('/');
 
+            string time = message.Substring(0, index);          
+            message = message.Substring(++index);
+            index = message.IndexOf('/');
+
             string name = message.Substring(0, index);
             string id = message.Substring(++index);
 
@@ -203,7 +213,10 @@ namespace ChatClientWpf
                  }));
             }
 
-            message = '\n' + name + " вошел в чат.";
+            if(WithTime)
+                message = '\n' + time + ' ' + name + " вошел в чат.";
+            else
+                message = '\n' + name + " вошел в чат.";
 
             gui.textBox.Dispatcher.Invoke(DispatcherPriority.Background, new Action(() =>
             {
@@ -211,9 +224,14 @@ namespace ChatClientWpf
             }));
         }
 
-        private void Leave(string id)
+        private void Leave(string message)
         {
             string name = "Unknown";
+
+            int index = message.IndexOf('/');
+
+            string time = message.Substring(0, index);
+            id = message.Substring(++index);
 
             gui.listBox.Dispatcher.Invoke(DispatcherPriority.Background, new
                  Action(() =>
@@ -231,8 +249,29 @@ namespace ChatClientWpf
 
             gui.textBox.Dispatcher.Invoke(DispatcherPriority.Background, new Action(() =>
             {
-                gui.textBox.Text += '\n' + name + " покинул чат."; 
+                if(WithTime)
+                    gui.textBox.Text += '\n' + time + ' ' + name + " покинул чат.";
+                else
+                    gui.textBox.Text += '\n' + name + " покинул чат.";
             }));
+        }
+
+
+        private void PrintDefaultMessage(string message)
+        {
+            int index = message.IndexOf('/');
+
+            string time = message.Substring(0, index);
+            message = message.Substring(++index);
+
+            gui.textBox.Dispatcher.Invoke(DispatcherPriority.Background, new
+                  Action(() =>
+                  {
+                      if(WithTime)
+                      gui.textBox.Text += "\n" + time + ' ' + message;
+                      else
+                      gui.textBox.Text += "\n" + message;
+                  }));
         }
     }
 }
