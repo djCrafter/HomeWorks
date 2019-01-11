@@ -49,6 +49,8 @@ namespace ChatClientWpf
             {
                 chatClient = new Client(nameWindow.GetNewName, "127.0.0.1", 8888, this);
 
+                Title += " {" + nameWindow.GetNewName + '}';
+
                 Thread clientThread = new Thread(chatClient.Connect);
                 clientThread.Start();
             }

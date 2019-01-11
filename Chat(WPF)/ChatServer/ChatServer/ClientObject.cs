@@ -10,8 +10,7 @@ using System.Threading;
 namespace ChatServer
 {
     public class ClientObject
-    {
-        
+    {       
         protected internal string Id { get; set; }
         protected internal NetworkStream Stream { get; private set; }
         string userName;
@@ -67,8 +66,13 @@ namespace ChatServer
                 userName = GetMessage();
 
                 SendUserList();
+                Thread.Sleep(100);
 
-                Thread.Sleep(50);
+                message = "history/" + server.UploadHistory(); 
+                byte[] historyData = Encoding.Unicode.GetBytes(message);
+                Stream.Write(historyData, 0, historyData.Length);
+
+                Thread.Sleep(100);
 
                 message = "entry/" + DateTime.Now.ToLongTimeString() + '/' + userName + '/' + Id;
                 server.UserEnterMessage(userName);
@@ -128,6 +132,7 @@ namespace ChatServer
                 default:
                     message = String.Format("{0}: {1}", userName, message);
                     Console.WriteLine(DateTime.Now.ToLongTimeString() + ' ' + message);
+                    server.AddChatString(DateTime.Now, message);
                     server.BroadcastMessage(code + '/' + DateTime.Now.ToLongTimeString() + '/' + message, this.Id);
                     break;
             }

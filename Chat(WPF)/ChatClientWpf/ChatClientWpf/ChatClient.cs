@@ -129,6 +129,10 @@ namespace ChatClientWpf
                 case "leave":
                     Leave(message);
                     break;
+
+                case "history":
+                    History(message);
+                    break;
                 default:
                     PrintDefaultMessage(message);
                     break;
@@ -272,6 +276,41 @@ namespace ChatClientWpf
                       else
                       gui.textBox.Text += "\n" + message;
                   }));
+        }
+
+
+
+        private void History(string message)
+        {
+            while (message.Contains('/'))
+            {
+                int index = message.IndexOf('/');
+
+                string time = message.Substring(0, index);
+                message = message.Substring(++index);
+                
+                index = message.IndexOf('/');
+
+                string str;
+
+                if (index > 0)
+                {
+                    str = message.Substring(0, index);
+                    message = message.Substring(++index);
+                }
+                else
+                {
+                    str = message;
+                }
+                gui.textBox.Dispatcher.Invoke(DispatcherPriority.Background, new
+               Action(() =>
+               {
+                   if (WithTime)
+                       gui.textBox.Text += "\n" + time + ' ' + str;
+                   else
+                       gui.textBox.Text += "\n" + str;
+               }));
+            }
         }
     }
 }
