@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClientWpf"
         mc:Ignorable="d"
-        Title="NameWindow" Height="321.235" Width="619.729" ResizeMode="NoResize">
+        Title="SimpleChat" Height="321.235" Width="619.729" ResizeMode="NoResize" >
+    <Window.Background>
+        <ImageBrush ImageSource="Image\fon.jpg"></ImageBrush>
+    </Window.Background>
     <Grid>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="75" Margin="76,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="456"
                  FontSize="50" PreviewKeyDown="textBox_PreviewKeyDown"/>

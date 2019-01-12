@@ -49,6 +49,14 @@ namespace ChatServer
             Stream.Write(data, 0, data.Length);
         }
 
+        public void SendSystemMessage(string message)
+        {
+            message = "server_messg/" + DateTime.Now.ToLongTimeString() + '/' + message; 
+
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            Stream.Write(data, 0, data.Length);
+        }
+
         public void Process()
         {
             try
@@ -91,9 +99,8 @@ namespace ChatServer
                     }
                     catch
                     {
-                        message = String.Format("{0} {1} покинул чат", DateTime.Now.ToLongTimeString(), userName);
-                        Console.WriteLine(message);
-
+                        server.UserOutMessage(userName);
+                 
                         message = "leave/" + DateTime.Now.ToLongTimeString() + '/' + Id;
 
                         server.BroadcastMessage(message, this.Id);
@@ -112,6 +119,38 @@ namespace ChatServer
             }
         }
 
+        private void PrivateCallBackMessage(string name, string message)
+        {
+            Console.Write(DateTime.Now.ToLongTimeString());
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(" Private message from " + userName + " to " + name + ": ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(message);
+            
+            message = "private_call_back/" + DateTime.Now.ToLongTimeString() + "/To " + name + ": " + message;
+
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            Stream.Write(data, 0, data.Length);
+        }
+
+        private void PrivateDecode(string message)
+        {
+            int index = message.IndexOf('/');
+
+            string name = message.Substring(0, index);
+            message = message.Substring(++index);
+
+            if (server.NameExist(name))
+            {
+                server.PrivateSend(userName, name, message);
+                PrivateCallBackMessage(name, message);
+            }
+            else
+            {
+                SendSystemMessage("SERVER: --- Неверное имя пользователя!!! --- ");
+            }
+        }
+
         public void MessageDecode(string message)
         {
             string code = "default";
@@ -126,8 +165,8 @@ namespace ChatServer
 
             switch (code)
             {
-                case "test":
-                    Console.WriteLine("Тест сработал");
+                case "private":
+                    PrivateDecode(message);
                     break;
                 default:
                     message = String.Format("{0}: {1}", userName, message);

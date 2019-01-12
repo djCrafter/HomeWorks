@@ -86,8 +86,21 @@ namespace ChatServer
 
 
         public void UserEnterMessage(string name)
-        {         
-            Console.WriteLine("{0} {1} вошел в чат.", DateTime.Now.ToLongTimeString(), name);
+        {
+            string message = name + " вошел в чат.";
+            history.Add(new ChatString(DateTime.Now, message));
+
+
+            Console.WriteLine(DateTime.Now.ToLongTimeString() + " " + message);
+        }
+
+        public void UserOutMessage(string name)
+        {
+            string message = name + " покинул чат.";
+            history.Add(new ChatString(DateTime.Now, message));
+
+
+            Console.WriteLine(DateTime.Now.ToLongTimeString() + " " + message);
         }
 
         public void AddChatString(DateTime dateTime, string str)
@@ -106,6 +119,29 @@ namespace ChatServer
                     sb.Append('/');
             }
             return sb.ToString();
+        }
+
+        public bool NameExist(string name)
+        {           
+            foreach (ClientObject client in clients)
+                if (name == client.UserName)
+                    return true;
+
+            return false;           
+        }
+
+        public void PrivateSend(string senderName, string recipientName, string message)
+        {
+            message = "private/" + DateTime.Now.ToLongTimeString() + '/' + "From " + senderName + ": " + message;
+
+            foreach (ClientObject client in clients)
+                if (recipientName == client.UserName)
+                {
+                    byte[] data = Encoding.Unicode.GetBytes(message);
+                    client.Stream.Write(data, 0, data.Length);
+                    break;
+                }
+
         }
     }
 

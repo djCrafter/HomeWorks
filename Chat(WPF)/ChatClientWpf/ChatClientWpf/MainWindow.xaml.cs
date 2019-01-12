@@ -32,15 +32,39 @@ namespace ChatClientWpf
             
 
             Closed += MainWindow_Closed;
+            textBox.TextChanged += TextBox_TextChanged;
+            listBox.MouseDoubleClick += ListBox_MouseDoubleClick;
         }
 
+        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DependencyObject obj = (DependencyObject)e.OriginalSource;
+
+            while (obj != null && obj != listBox)
+            {
+                if (obj.GetType() == typeof(ListBoxItem))
+                {
+                    ListBoxItem boxItem = (ListBoxItem)obj;
+                    ChatUser chatUser = (ChatUser)boxItem.Content;
+                    PrivateStringConstructor(chatUser.Name);
+                    break;
+                }
+                obj = VisualTreeHelper.GetParent(obj);
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            textBox.ScrollToEnd();
+        }
+
+       
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             chatClient.Disconnect();
         }
 
         
-
         private void SetName()
         {
             NameWindow nameWindow = new NameWindow();
@@ -63,14 +87,28 @@ namespace ChatClientWpf
     
         private void sendButton_Click(object sender, RoutedEventArgs e)
         {
-            SendMessage("default");
+            if (sendTextBox.Text.Contains("private/"))
+            {
+                SendMessage();
+            }
+            else
+            {
+                SendMessage("default");
+            }
         }
 
         private void sendTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
+       {
             if (e.Key == Key.Enter)
             {
-                SendMessage("default");
+                if (sendTextBox.Text.Contains("private/"))
+                {
+                    SendMessage();
+                }
+                else
+                {
+                    SendMessage("default");
+                }
             }
         }
 
@@ -85,6 +123,29 @@ namespace ChatClientWpf
             }
         }
 
-       
+        private async void SendMessage()
+        {
+            if (sendTextBox.Text.Length > 0)
+            {
+                string message = sendTextBox.Text;
+                sendTextBox.Clear();
+
+                await chatClient.SendMessage(message);
+            }
+        }
+
+        private void PrivateStringConstructor(string name)
+        {
+            string str = "private/" + name + '/';
+            sendTextBox.Text = str;
+        }
+
+        private void sendPersonal_Click(object sender, RoutedEventArgs e)
+        {
+            if (listBox.SelectedItem != null && sendTextBox.Text.Length > 0)
+            {
+                ///TO DO:!!!!!   
+            }
+        }
     }
 }

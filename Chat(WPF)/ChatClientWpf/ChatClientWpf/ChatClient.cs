@@ -70,6 +70,8 @@ namespace ChatClientWpf
             });
         }
 
+    
+
         public void ReciveMessage()
         {
             while (true)
@@ -133,6 +135,19 @@ namespace ChatClientWpf
                 case "history":
                     History(message);
                     break;
+
+                case "server_messg":
+                    PrintDefaultMessage(message);
+                    break;
+
+                case "private":
+                    PrintDefaultMessage(message);
+                    break;
+
+                case "private_call_back":
+                    PrintDefaultMessage(message);
+                    break;
+
                 default:
                     PrintDefaultMessage(message);
                     break;
@@ -224,7 +239,7 @@ namespace ChatClientWpf
 
             gui.textBox.Dispatcher.Invoke(DispatcherPriority.Background, new Action(() =>
             {
-                gui.textBox.Text += message;
+                gui.textBox.AppendText(message);
             }));
         }
 
@@ -254,9 +269,9 @@ namespace ChatClientWpf
             gui.textBox.Dispatcher.Invoke(DispatcherPriority.Background, new Action(() =>
             {
                 if(WithTime)
-                    gui.textBox.Text += '\n' + time + ' ' + name + " покинул чат.";
+                    gui.textBox.AppendText('\n' + time + ' ' + name + " покинул чат.");
                 else
-                    gui.textBox.Text += '\n' + name + " покинул чат.";
+                    gui.textBox.AppendText('\n' + name + " покинул чат.");
             }));
         }
 
@@ -272,9 +287,9 @@ namespace ChatClientWpf
                   Action(() =>
                   {
                       if(WithTime)
-                      gui.textBox.Text += "\n" + time + ' ' + message;
+                      gui.textBox.AppendText("\n" + time + ' ' + message);
                       else
-                      gui.textBox.Text += "\n" + message;
+                      gui.textBox.AppendText("\n" + message);
                   }));
         }
 
@@ -306,9 +321,9 @@ namespace ChatClientWpf
                Action(() =>
                {
                    if (WithTime)
-                       gui.textBox.Text += "\n" + time + ' ' + str;
+                       gui.textBox.AppendText("\n" + time + ' ' + str);
                    else
-                       gui.textBox.Text += "\n" + str;
+                       gui.textBox.AppendText("\n" + str);
                }));
             }
         }

@@ -5,19 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClientWpf"
         mc:Ignorable="d"
-        Title="LocalChatClient" Height="498.795" Width="879.97">
+        Title="LocalChatClient" Height="498.795" Width="879.97" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="Image\fon.jpg"></ImageBrush>
+    </Window.Background>
     <Grid>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="343" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="582" VerticalScrollBarVisibility="Auto"/>
-        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="343" Margin="654,10,0,0" VerticalAlignment="Top" Width="192">
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="343" Margin="10,10,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" Width="582" VerticalScrollBarVisibility="Auto"
+                 FontSize="16"
+                 Background="LightGray"
+          />
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="343" Margin="654,10,0,0" VerticalAlignment="Top" Width="192" Background="LightGray" FontSize="16"
+                 >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="sendPersonal" Content="Отправить лично" HorizontalAlignment="Left" Margin="654,381,0,0" VerticalAlignment="Top" Width="192" Height="48"/>
-        <Button x:Name="sendButton" Content="Отправить" HorizontalAlignment="Left" Margin="400,381,0,0" VerticalAlignment="Top" Width="192" Height="48" Click="sendButton_Click"/>
-        <TextBox x:Name="sendTextBox" HorizontalAlignment="Left" Height="48" Margin="23,381,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" PreviewKeyDown="sendTextBox_PreviewKeyDown"/>
+        <Button x:Name="sendPersonal" Content="Отправить лично" HorizontalAlignment="Left" Margin="654,381,0,0" VerticalAlignment="Top" Width="192" Height="48" BorderThickness="4,4,4,4" Click="sendPersonal_Click"/>
+        <Button x:Name="sendButton" Content="Отправить" HorizontalAlignment="Left" Margin="400,381,0,0" VerticalAlignment="Top" Width="192" Height="48" Click="sendButton_Click" BorderThickness="4,4,4,4"/>
+        <TextBox x:Name="sendTextBox" HorizontalAlignment="Left" Height="48" Margin="23,381,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" PreviewKeyDown="sendTextBox_PreviewKeyDown"
+                 Background="LightGray" FontSize="16"/>
 
     </Grid>
 </Window>
