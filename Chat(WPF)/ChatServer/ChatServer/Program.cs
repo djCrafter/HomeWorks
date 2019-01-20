@@ -19,15 +19,18 @@ namespace ChatServer
         {
             try
             {
-                server = new ServerObject();
+                server = new ServerObject(args);
+
                 listenThread = new Thread(new ThreadStart(server.Listen));
                 listenThread.Start();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 server.Disconnect();
                 Console.WriteLine(ex.Message);
             }
+
+            Console.ReadLine();
         }
     }
 }

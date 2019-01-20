@@ -16,6 +16,20 @@ namespace ChatClientWpf
         MainWindow gui;
 
         string userName;
+        string password;
+
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; }
+        }
+
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+        
         private readonly string host;
         private readonly int port;
         static TcpClient client;
@@ -25,9 +39,10 @@ namespace ChatClientWpf
         bool WithTime { get; set; }
 
 
-        public Client(string userName, string host, int port, MainWindow gui)
+        public Client(string userName, string password, string host, int port, MainWindow gui)
         {
             this.userName = userName;
+            this.password = password;
             this.host = host;
             this.port = port;
             this.gui = gui;
@@ -43,7 +58,7 @@ namespace ChatClientWpf
                 client.Connect(host, port);
                 stream = client.GetStream();
 
-                string message = userName;
+                string message = userName + '/' + password;
                 byte[] data = Encoding.Unicode.GetBytes(message);
                 stream.Write(data, 0, data.Length);
 
@@ -96,7 +111,7 @@ namespace ChatClientWpf
                    
                 }
                 catch(Exception ex)
-                {                                 
+                {                  
                    Disconnect();
                 }
             }
@@ -146,6 +161,15 @@ namespace ChatClientWpf
 
                 case "private_call_back":
                     PrintDefaultMessage(message);
+                    break;
+
+                case "novalid":
+                    gui.Dispatcher.Invoke(DispatcherPriority.Background, new
+              Action(() =>
+              {
+                  System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                  Application.Current.Shutdown();
+              }));                   
                     break;
 
                 default:

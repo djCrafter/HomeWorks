@@ -26,7 +26,7 @@ namespace ChatClientWpf
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if(textBox.Text.Length > 0)
+            if(textBox.Text.Length > 0 && passwordBox.Password.Length > 8)
             this.DialogResult = true;
         }
 
@@ -34,14 +34,15 @@ namespace ChatClientWpf
         {
             if (e.Key == Key.Enter)
             {
-                if (textBox.Text.Length > 0)
+                if (textBox.Text.Length > 0 && passwordBox.Password.Length > 7)
                     this.DialogResult = true;
             }
         }
 
-        public string GetNewName
+        public (string, string) GetNamePass()
         {
-            get { return textBox.Text; }
+            var result = (textBox.Text, passwordBox.Password);
+            return result;
         }
     }
 }

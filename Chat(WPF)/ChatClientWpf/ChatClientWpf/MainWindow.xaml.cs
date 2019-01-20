@@ -71,9 +71,11 @@ namespace ChatClientWpf
 
             if(nameWindow.ShowDialog() == true)
             {
-                chatClient = new Client(nameWindow.GetNewName, "127.0.0.1", 8888, this);
+                var typle = nameWindow.GetNamePass();
 
-                Title += " {" + nameWindow.GetNewName + '}';
+                chatClient = new Client(typle.Item1, typle.Item2, "127.0.0.1", 8888, this);
+
+                Title = " {" + typle.Item1 + '}';
 
                 Thread clientThread = new Thread(chatClient.Connect);
                 clientThread.Start();
@@ -146,6 +148,26 @@ namespace ChatClientWpf
             {
                 ///TO DO:!!!!!   
             }
+        }
+
+        public void RestartValidation()
+        {
+            NameWindow nameWindow = new NameWindow();
+
+            if (nameWindow.ShowDialog() == true)
+            {
+                var typle = nameWindow.GetNamePass();
+
+                chatClient.UserName = typle.Item1;
+                chatClient.Password = typle.Item2;
+
+                Title = " {" + typle.Item1 + '}';                     
+            }
+            else
+            {
+                Close();
+            }
+
         }
     }
 }

@@ -13,7 +13,10 @@ namespace ChatServer
     {       
         protected internal string Id { get; set; }
         protected internal NetworkStream Stream { get; private set; }
+
         string userName;
+        string userPass;
+
         public string UserName
         {
             get
@@ -57,6 +60,14 @@ namespace ChatServer
             Stream.Write(data, 0, data.Length);
         }
 
+        private void SetNamePass(string message)
+        {
+            int index = message.IndexOf('/');
+
+            userName = message.Substring(0, index);
+            userPass = message.Substring(++index);
+        }
+
         public void Process()
         {
             try
@@ -65,48 +76,59 @@ namespace ChatServer
 
                 string message = null;
 
-                message = "takeid/" + Id;
-                byte[] data = Encoding.Unicode.GetBytes(message);
-                Stream.Write(data, 0, data.Length);
+                SetNamePass(GetMessage());
 
-                Thread.Sleep(100);
-
-                userName = GetMessage();
-
-                SendUserList();
-                Thread.Sleep(100);
-
-                message = "history/" + server.UploadHistory(); 
-                byte[] historyData = Encoding.Unicode.GetBytes(message);
-                Stream.Write(historyData, 0, historyData.Length);
-
-                Thread.Sleep(100);
-
-                message = "entry/" + DateTime.Now.ToLongTimeString() + '/' + userName + '/' + Id;
-                server.UserEnterMessage(userName);
-                server.BroadcastMessage(message, Id);
-
-                while (true)
+                if(server.Identification(userName, userPass))
                 {
-                    try
+                    message = "takeid/" + Id;
+                    byte[] data = Encoding.Unicode.GetBytes(message);
+                    Stream.Write(data, 0, data.Length);
+
+                    Thread.Sleep(100);
+
+                    SendUserList();
+                    Thread.Sleep(100);
+
+                    message = "history/" + server.UploadHistory();
+                    byte[] historyData = Encoding.Unicode.GetBytes(message);
+                    Stream.Write(historyData, 0, historyData.Length);
+
+                    Thread.Sleep(100);
+
+                    message = "entry/" + DateTime.Now.ToLongTimeString() + '/' + userName + '/' + Id;
+                    server.UserEnterMessage(userName);
+                    server.BroadcastMessage(message, Id);
+
+                    while (true)
                     {
-                        message = GetMessage();
+                        try
+                        {
+                            message = GetMessage();
 
-                        if (message.Length == 0)
-                            throw new Exception();
+                            if (message.Length == 0)
+                                throw new Exception();
 
-                        MessageDecode(message);
-                    }
-                    catch
-                    {
-                        server.UserOutMessage(userName);
-                 
-                        message = "leave/" + DateTime.Now.ToLongTimeString() + '/' + Id;
+                            MessageDecode(message);
+                        }
+                        catch
+                        {
+                            server.UserOutMessage(userName);
 
-                        server.BroadcastMessage(message, this.Id);
-                        break;
+                            message = "leave/" + DateTime.Now.ToLongTimeString() + '/' + Id;
+
+                            server.BroadcastMessage(message, this.Id);
+                            break;
+                        }
                     }
                 }
+                else
+                {
+                    message = "novalid/" + Id;
+                    byte[] data = Encoding.Unicode.GetBytes(message);
+                    Stream.Write(data, 0, data.Length);
+                } 
+                
+
             }
             catch (Exception e)
             {

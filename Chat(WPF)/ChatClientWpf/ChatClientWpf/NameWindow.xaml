@@ -5,15 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClientWpf"
         mc:Ignorable="d"
-        Title="SimpleChat" Height="321.235" Width="619.729" ResizeMode="NoResize" >
+        Title="SimpleChat" Height="474.112" Width="647.789" ResizeMode="NoResize" >
     <Window.Background>
         <ImageBrush ImageSource="Image\fon.jpg"></ImageBrush>
     </Window.Background>
     <Grid>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="75" Margin="76,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="456"
                  FontSize="50" PreviewKeyDown="textBox_PreviewKeyDown"/>
-        <Label x:Name="label" Content="Введите имя:" HorizontalAlignment="Left" Margin="76,45,0,0" VerticalAlignment="Top" FontSize="30"/>
-        <Button x:Name="button" Content="OK" HorizontalAlignment="Left" Margin="214,193,0,0" VerticalAlignment="Top" Width="174" Height="63" FontSize="30" Click="button_Click"/>
+        <Label x:Name="label" Content="Имя:" HorizontalAlignment="Left" Margin="76,45,0,0" VerticalAlignment="Top" FontSize="30"/>
+        <Label x:Name="label_pass" Content="Пароль:" HorizontalAlignment="Left" Margin="76,184,0,0" VerticalAlignment="Top" FontSize="30" RenderTransformOrigin="1.527,0.58"/>
+        <Button x:Name="button" Content="OK" HorizontalAlignment="Left" Margin="217,351,0,0" VerticalAlignment="Top" Width="174" Height="63" FontSize="30" Click="button_Click"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Height="75" Margin="76,234,0,0" VerticalAlignment="Top" Width="456"
+            FontSize="50" PreviewKeyDown="textBox_PreviewKeyDown"/>
+        <Label x:Name="label_Copy" Content="Пароль:" HorizontalAlignment="Left" Margin="76,184,0,0" VerticalAlignment="Top" FontSize="30" RenderTransformOrigin="1.527,0.58"/>
 
     </Grid>
 </Window>

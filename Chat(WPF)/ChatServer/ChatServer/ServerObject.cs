@@ -6,15 +6,153 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace ChatServer
 {
     public class ServerObject
     {
+        string[] args;
+
+        SqlConnection sqlConnection;
+
         static TcpListener tcpListener;
         List<ClientObject> clients = new List<ClientObject>();
 
-        List<ChatString> history = new List<ChatString>(); 
+        List<ChatString> history = new List<ChatString>();
+
+
+        public ServerObject(string[] args)
+        {
+            this.args = args;
+        }
+
+        public bool ArgsExist()
+        {
+            if (args.Length > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public bool DbConnect(string dbName)
+        {
+            string SqlServerName = @".\SQLEXPRESS";
+
+            string conStr;
+
+            if (ArgsExist())
+                conStr = @"Data Source=" + args[0] + "; Initial Catalog=master; Integrated Security=True;";
+            else
+                conStr = @"Data Source=" + SqlServerName + "; Initial Catalog=master; Integrated Security=True;";
+
+            try
+            {
+                sqlConnection = new SqlConnection(conStr);
+                sqlConnection.Open();
+
+                if (!DbExist(sqlConnection, dbName))                            
+                    CreateDB(sqlConnection, dbName);
+
+                UseDb(sqlConnection, dbName);
+
+                if (!TableExist(sqlConnection, "UsersTable"))          
+                    CreateUsersTable(sqlConnection, "UsersTable");
+              
+                Console.WriteLine("SqlConnection status: " + sqlConnection.State);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public bool DbExist(SqlConnection connection, string dbName)
+        {
+
+            SqlCommand cmd = new SqlCommand("DECLARE @bit Bit = 0; " +
+                "IF DB_ID('" + dbName + "') IS NOT NULL " +
+                " SET @bit = 1; " +
+                " ELSE SET @bit = 0; " +
+                " SELECT @bit", connection);
+
+            return (bool)cmd.ExecuteScalar();
+        }
+
+        public bool TableExist(SqlConnection connection, string tableName)
+        {
+            SqlCommand cmd = new SqlCommand("DECLARE @bit Bit = 0; " +
+                "IF object_id('" + tableName + "') IS NOT NULL " +
+                " SET @bit = 1; " +
+                " ELSE SET @bit = 0; " +
+                " SELECT @bit", connection);
+
+            return (bool)cmd.ExecuteScalar();
+        }
+
+        public void CreateDB(SqlConnection connection, string dbName)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("CREATE DATABASE " + dbName, connection);
+
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Users DataBase created!");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void UseDb(SqlConnection connection, string dbName)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("USE " + dbName, connection);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void CreateUsersTable(SqlConnection connection, string tableName)
+        {
+       
+            string cmdString = "CREATE TABLE " + tableName + "(Id int PRIMARY KEY IDENTITY NOT NULL, " +
+           "UserName nvarchar(30) UNIQUE NOT NULL, [Password] nvarchar(30) CHECK(Len([Password]) > 7) NOT NULL);";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand(cmdString, connection);
+
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Users Table created!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public bool Identification(string name, string pass)
+        {
+            string cmdString = "DECLARE @bit bit = 0; " +
+                "IF EXISTS(SELECT UserName FROM UsersTable WHERE UsersTable.UserName = '" +
+                 name + "' AND UsersTable.[Password] = '" +
+                 pass + "') " +
+                "SET @bit = 1 ELSE SET @bit = 0; " +
+                "SELECT @bit";
+
+            SqlCommand cmd = new SqlCommand(cmdString, sqlConnection);
+
+            return (bool)cmd.ExecuteScalar();
+        }
 
         protected internal void AddConnection(ClientObject clientObject)
         {
@@ -33,26 +171,34 @@ namespace ChatServer
         {
             try
             {
-                tcpListener = new TcpListener(IPAddress.Any, 8888);
-                tcpListener.Start();
-                Console.WriteLine("Сервер запущен. Ожидание подключений...");
-
-                while (true)
+                if (DbConnect("WpfChatIdBase"))
                 {
-                    TcpClient tcpClient = tcpListener.AcceptTcpClient();
+                    tcpListener = new TcpListener(IPAddress.Any, 8888);
+                    tcpListener.Start();
+                    Console.WriteLine("Сервер запущен. Ожидание подключений...");
 
-                    ClientObject clientObject = new ClientObject(tcpClient, this);
+                    while (true)
+                    {
+                        TcpClient tcpClient = tcpListener.AcceptTcpClient();
+
+                        ClientObject clientObject = new ClientObject(tcpClient, this);
 
 
-                    Thread clientThread = new Thread(clientObject.Process);
-                    clientThread.Start();
+                        Thread clientThread = new Thread(clientObject.Process);
+                        clientThread.Start();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Сервер не был запущен. Проверьте входящие параметры.");
                 }
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Disconnect();
+                sqlConnection.Close();
+                Disconnect();                     
             }
         }
 
