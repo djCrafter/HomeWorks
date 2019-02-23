@@ -1,0 +1,28 @@
+﻿
+#id1{
+    width:1000px;
+    height:600px;
+    margin:auto;
+}
+
+#id2 {
+    background-color: darkcyan;
+    height: 100px;
+    text-align: center;
+}
+
+.mainCont{
+    background-color:darkgray;
+    width: 50%;
+    float:left;
+    margin: 30px;
+    height:400px;
+}
+
+.rCol {
+    background-color: orangered;
+    float: left;
+    width: 35%;
+    margin: 30px;
+    height: 400px;
+}

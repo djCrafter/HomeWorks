@@ -1,0 +1,12 @@
+﻿body {
+    background-color:cadetblue;
+}
+
+#id1{
+    font-size:x-large;
+    background-color:white;
+    border: solid 6px red;
+    float:left;
+    margin: 10px 30px 10px 30px;
+    padding: 20px;
+}

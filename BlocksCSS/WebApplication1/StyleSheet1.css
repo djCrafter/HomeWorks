@@ -1,0 +1,45 @@
+﻿body {
+    width: 1000px;
+    height: 800px;
+    margin: auto;
+}
+
+.prop {
+    border: solid 1px blue;
+    float: left;
+    height: 40px;
+    font-size: x-large;
+    margin: 10px;
+    padding: 10px 30px 10px 30px;
+    width: 200px;
+    text-align: center;
+}
+
+#header1{
+    background-color:chocolate;
+}
+
+#header2 {
+    background-color: green;   
+}
+
+#header3 {
+    background-color: cornflowerblue;
+}
+
+#col1{
+    background-color:darkgoldenrod;
+    clear:both;
+    height:300px;
+}
+
+#col2 {
+    background-color: darkcyan;
+    height: 300px;
+}
+
+#col3 {
+    background-color: aqua;
+    height: 300px;
+}
+
