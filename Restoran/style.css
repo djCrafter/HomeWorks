@@ -1,0 +1,154 @@
+body{
+    width: 800px;
+    padding-left: 50%;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 12px;
+}
+
+#main{
+    width:800px;
+    margin-left: -400px;
+    background-image: url(images/fon_bg.jpg);
+    background-repeat: repeat-y;
+}
+
+#header{
+    width: 800px;
+    height: 155px;
+    background-image: url(images/header.jpg);
+    background-repeat: no-repeat;
+}
+
+#menu1{
+    width: 800px;
+    height: 35px;
+    background-image: url(images/menu1.jpg);
+    background-repeat: no-repeat;
+}
+
+#menu2{
+    width: 800px;
+    height: 36px;
+    background-image: url(images/menu2.jpg);
+    background-repeat: no-repeat;
+}
+
+menu3{
+    width: 800px;
+    height: 72px;
+    background-image: url(images/menu3.jpg);
+    background-repeat: no-repeat;
+}
+#reklama{
+    float:left;
+    width: 263px;
+}
+
+#reklama_top{
+    width: 263px;
+    height: 67px;
+    background-image: url(images/reklama_bg.jpg);
+    background-repeat: no-repeat;
+}
+
+#reklama_bottom{
+    width: 263px;
+    height: 35px;
+    background-image: url(images/reklama_bottom.jpg);
+    background-repeat: no-repeat;
+}
+
+#content{
+    float:left;
+    width:507px;
+}
+
+#footer{
+    clear: both;
+    width: 800px;
+    height: 28px;
+    background-image: url(images/footer.jpg);
+    background-repeat: repeat-x;
+}
+
+#headertext1{
+    width:270px;
+    float: right;
+    font-size:24px;
+    font-family: Arial;
+    padding-top: 30px;
+    color: #FFFFFF;
+}
+
+#headertext2{
+    width: 250px;
+    float: right;
+    clear: right;
+    font-size: 20px;
+    font-family: Arial;
+    padding-top: 5px;
+    color: #FAF46E;
+}
+
+#textmenu1{
+    padding-left: 270px;
+    padding-top: 10px;
+}
+
+#textmenu2{
+    padding-left: 300px;
+    padding-top: 10px;
+}
+
+#textmenu3{
+    text-decoration: none;
+    color:#000000;
+    font-size:15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#textreklamatop{
+    padding: 25px 25px 0px 10px;
+    font-size: 14px;
+    color:#FFFFFF;
+    font-weight: bold;
+}
+
+a.reklama{
+    display: block;
+    line-height: 30px;
+    text-decoration: none;
+    color:#000000;
+    font-size:14px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+a.reklama:first-letter{
+    color: #02663d;
+}
+
+#content{
+    float:left;
+    width: 507px;
+    padding: 15px;
+}
+#footer{
+    clear: both;
+    width: 800px;
+    height: 28px;
+    background-image: url(images/footer.jpg);
+    background-repeat: repeat-x;
+    text-align: center;
+    padding-top: 5px;
+}
+
+a{
+    color: #000000;
+}
+a:hover{
+    color: #02663d;
+}
