@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+.circle {
+    width: 100px; /* задаете свои размеры */
+    height: 100px;
+    border-radius: 50%;
+    background-color: gray;
+    /* не забываем о кроссбраузерности */
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    margin: 5px;
+    float: left;
+}
+        .bigdiv{
+            border: 1px solid gray;          
+            float: left;
+        }    
+        
+        #next{
+    width: 100px; /* задаете свои размеры */
+    height: 100px;
+    border-radius: 20%;
+    background-color: skyblue;
+            
+    -moz-border-radius: 20%;
+    -webkit-border-radius: 20%;
+    -khtml-border-radius: 20%;
+    float: left;
+    margin: 5px;
+            
+      display: flex;
+  align-items: center }
+     }
+        
+    </style>   
+</head>
+<body>
+    <div class="bigdiv">
+       <div class="circle" style="background-color: coral"></div>
+       <div class="circle"></div>
+       <div class="circle"></div>
+    </div>
+    
+    <div id="next">NEXT</div>
+    
+    <script>
+
+        
+      window.onload = function(){
+          
+      }
+        
+        next.onclick = function(){
+           NextCircle();
+        }
+        
+        function NextCircle(){
+            var circles = document.getElementsByClassName("circle");
+            
+            
+       
+          var index;
+          for(var i = 0; i < 3; i++){
+             console.log(circles[i].style.backgroundColor);
+          }
+            
+        }
+    </script>
+</body>
+</html>

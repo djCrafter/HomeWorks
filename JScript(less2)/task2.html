@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task2</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        .modal {
+            position: absolute;
+            width: 300px;
+            margin-left: -150px; 
+            left: 50%; 
+            top: -100%;
+            padding: 20px;
+            background: #fff;
+            border: 1x solid #333;
+            z-index: 9999;
+            transition: all 0.5s ease-in;                
+        }
+        .overflow {
+            width: 100%;
+            height: 100%;
+            z-index: 9998;
+            background: rgba(0,0,0,0.7);
+            position: absolute;
+            top: 0;
+        }         
+    </style>
+</head>
+<body>
+    <button onclick="openWin();">OPEN MODAL</button>
+    
+    <div class="modal">
+       <p>Hello from modal Window!!!</p> 
+        <form>
+         <input type="button" style="width: 100px" value="CLOSE" onclick="closeWin();" >
+        </form>
+    </div>
+    
+    <script>
+        var modal = document.querySelector('.modal');
+        var overflow = document.createElement('div');
+        
+        function openWin(){
+            overflow.className = "overflow";
+            document.body.appendChild(overflow);
+            
+            var height = modal.offsetHeight;
+            modal.style.marginTop = - height / 2 + "px";
+            modal.style.top = "50%";
+        }
+        
+        function closeWin(){
+            modal.style.top = "-100%";
+            overflow.remove();
+        }
+    </script>
+</body>
+</html>
